@@ -33,7 +33,6 @@ References:
                  Christopher M. Bishop, section 4.3.2
 
 """
-__docformat__ = 'restructedtext en'
 
 import pickle
 import gzip
@@ -131,6 +130,7 @@ class LogisticRegression(object):
             cost=cost+0.01*(params_i**2).sum()
         '''
         return cost
+
     def errors(self, y):
         """Return a float representing the number of errors in the minibatch
         over the total number of examples of the minibatch ; zero one
