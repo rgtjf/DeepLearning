@@ -131,7 +131,6 @@ class LogisticRegression(object):
         log_likelihood=-T.mean(T.log(self.p_y_given_x)[T.arange(y.shape[0]), y])
         return log_likelihood
 
-
     #wenpeng define cross-entropy for logistic_sgd
     def cross_entropy_regularization(self, y, params):
         
@@ -141,6 +140,7 @@ class LogisticRegression(object):
             cost=cost+0.01*(params_i**2).sum()
         '''
         return cost
+
     def errors(self, y):
         """Return a float representing the number of errors in the minibatch
         over the total number of examples of the minibatch ; zero one
@@ -357,6 +357,10 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
     n_valid_batches = valid_set_x.get_value(borrow=True).shape[0] / batch_size
     n_test_batches = test_set_x.get_value(borrow=True).shape[0] / batch_size
 
+    n_train_batches = int(n_train_batches)
+    n_valid_batches = int(n_valid_batches)
+    n_test_batches = int(n_test_batches)
+
     ######################
     # BUILD ACTUAL MODEL #
     ######################
@@ -370,7 +374,7 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
 
     # construct the logistic regression class
     # Each MNIST image has size 28*28
-    classifier = LogisticRegression(input=x, n_in=28 * 28, n_out=10)
+    classifier = LogisticRegression(input=x, rng=numpy.random.RandomState(22), n_in=28 * 28, n_out=10)
 
     # the cost we minimize during training is the negative log likelihood of
     # the model in symbolic format
@@ -474,14 +478,14 @@ def sgd_optimization_mnist(learning_rate=0.13, n_epochs=1000,
                 break
 
     end_time = time.clock()
-    print((('Optimization complete with best validation score of %f %%,'
-           'with test performance %f %%') %
-                 (best_validation_loss * 100., test_score * 100.)))
+    print('Optimization complete with best validation score of %f %%,'
+           'with test performance %f %%') %\
+                (best_validation_loss * 100., test_score * 100.)
     print('The code run for %d epochs, with %f epochs/sec' % (
-        epoch, 1. * epoch / (end_time - start_time)))
+                epoch, 1. * epoch / (end_time - start_time)))
     print(('The code for file ' +
-                          os.path.split(__file__)[1] +
-                          ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr)
+            os.path.split(__file__)[1] +
+            ' ran for %.1fs' % ((end_time - start_time))), file=sys.stderr)
 
 if __name__ == '__main__':
     sgd_optimization_mnist()

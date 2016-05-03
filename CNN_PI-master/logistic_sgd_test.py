@@ -41,7 +41,6 @@ import sys
 import time
 
 import numpy
-import random
 import theano
 import theano.tensor as T
 

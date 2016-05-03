@@ -5,8 +5,6 @@ import sklearn
 import sklearn.datasets
 import matplotlib.pyplot as plt
 import matplotlib
-from IPython.display import SVG
-import pydot
 
 matplotlib.rcParams['figure.figsize'] = (10.0, 8.0)
 
@@ -123,9 +121,11 @@ def build_model(num_passes=20000, print_loss=False):
             print("Loss after iteration %i: %f" %(i, calculate_loss(train_X, train_y)))
 
 # Build a model with a 3-dimensional hidden layer
+# Build a model with a 3-dimensional hidden layer
 build_model(print_loss=True)
 
 # Plot the decision boundary
 plot_decision_boundary(lambda x: predict(x))
 plt.title("Decision Boundary for hidden layer size 3")
 plt.show()
+
